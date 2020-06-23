@@ -61,12 +61,7 @@
 		F9FD3CFD24A1AFBA000846A2 /* iOSRookie */ = {
 			isa = PBXGroup;
 			children = (
-				F9FD3CFE24A1AFBA000846A2 /* AppDelegate.h */,
-				F9FD3CFF24A1AFBA000846A2 /* AppDelegate.m */,
-				F9FD3D0124A1AFBA000846A2 /* SceneDelegate.h */,
-				F9FD3D0224A1AFBA000846A2 /* SceneDelegate.m */,
-				F9FD3D0424A1AFBA000846A2 /* ViewController.h */,
-				F9FD3D0524A1AFBA000846A2 /* ViewController.m */,
+				F9FD3D1724A1B07E000846A2 /* SupportingFiles */,
 				F9FD3D0724A1AFBA000846A2 /* Main.storyboard */,
 				F9FD3D0A24A1AFBC000846A2 /* Assets.xcassets */,
 				F9FD3D0C24A1AFBC000846A2 /* LaunchScreen.storyboard */,
@@ -74,6 +69,19 @@
 				F9FD3D1024A1AFBC000846A2 /* main.m */,
 			);
 			path = iOSRookie;
+			sourceTree = "<group>";
+		};
+		F9FD3D1724A1B07E000846A2 /* SupportingFiles */ = {
+			isa = PBXGroup;
+			children = (
+				F9FD3CFE24A1AFBA000846A2 /* AppDelegate.h */,
+				F9FD3CFF24A1AFBA000846A2 /* AppDelegate.m */,
+				F9FD3D0124A1AFBA000846A2 /* SceneDelegate.h */,
+				F9FD3D0224A1AFBA000846A2 /* SceneDelegate.m */,
+				F9FD3D0424A1AFBA000846A2 /* ViewController.h */,
+				F9FD3D0524A1AFBA000846A2 /* ViewController.m */,
+			);
+			path = SupportingFiles;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
