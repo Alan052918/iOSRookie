@@ -15,10 +15,11 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property (strong, nonatomic, readwrite, nullable) DoublyLinkedListNode *head;
 
-- (void)addNode:(NSNumber *)newNodeData;
-- (BOOL)insertNode:(NSNumber *)newNodeData atIndex:(int)index;
-- (NSNumber *)popHead;
-//- (NSNumber *)deleteNodeAtIndex:(int)index;
+- (void)addNode:(id)newNodeData;
+- (BOOL)insertNode:(id)newNodeData atIndex:(int)index;
+- (void)popHead;
+- (void)keepHead;
+- (void)deleteNodeAtIndex:(int)index;
 - (void)printList;
 - (BOOL)detectCycle;
 

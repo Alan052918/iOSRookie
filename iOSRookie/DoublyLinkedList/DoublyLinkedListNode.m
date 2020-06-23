@@ -10,4 +10,11 @@
 
 @implementation DoublyLinkedListNode
 
+- (void)setNodeData:(id<NodeDataSource>)nodeData {
+    if ([_nodeData conformsToProtocol:@protocol(NodeDataSource)] &&
+        [_nodeData respondsToSelector:@selector(detailForNode:)]) {
+        [_nodeData detailForNode:self];
+    }
+}
+
 @end
