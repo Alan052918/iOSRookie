@@ -10,17 +10,9 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@class DoublyLinkedListNode;
-@protocol NodeDataSource <NSObject>
-
-- (void)detailForNode:(DoublyLinkedListNode *)node;
-
-@end
-
 @interface DoublyLinkedListNode : NSObject
 
-//@property (strong, readwrite, nonatomic, nonnull) NSNumber *nodeData;
-@property (nonatomic, weak) id <NodeDataSource> nodeData;
+@property (strong, readwrite, nonatomic, nonnull) id nodeData;
 @property (strong, readwrite, nonatomic, nullable) DoublyLinkedListNode *nextNode;
 @property (weak, readwrite, nonatomic, nullable) DoublyLinkedListNode *previousNode;
 

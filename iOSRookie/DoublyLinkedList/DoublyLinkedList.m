@@ -35,69 +35,70 @@
     self.size++;
 }
 
-- (BOOL)insertNode:(id)newNodeData atIndex:(int)index {
-    DoublyLinkedListNode *newNode = [[DoublyLinkedListNode alloc] init];
-    newNode.nodeData = newNodeData;
-    newNode.nextNode = nil;
-    newNode.previousNode = nil;
+- (DoublyLinkedListNode *)getNodeAtIndex:(NSUInteger)index {
     if (index < 0 || index >= self.size) {
-        NSLog(@"Fail to insert node, index out of bounds");
+        NSLog(@"Fail to fetch node: index out of bounds");
+        return nil;
+    }
+    DoublyLinkedListNode *iterator = self.head;
+    while (iterator != nil && index > 0) {
+        iterator = iterator.nextNode;
+        index--;
+    }
+    return iterator;
+}
+
+- (BOOL)insertNode:(id)newNodeData atIndex:(NSUInteger)index {
+    if (self.size == 0) {
+        [self addNode:newNodeData];
+        return YES;
+    }
+    DoublyLinkedListNode *previousNeighbor = [self getNodeAtIndex:index - 1];
+    if (previousNeighbor == nil) {
+        NSLog(@"Fail to insert node: index out of bounds");
         return NO;
     }
-    DoublyLinkedListNode *previousIterator = self.head;
-    int iteratorIndex = 0;
-    while (previousIterator.nextNode != nil && iteratorIndex < index - 1) {
-        previousIterator = previousIterator.nextNode;
-        iteratorIndex++;
+    if (previousNeighbor.nextNode == nil) {
+        [self addNode:newNodeData];
+        return YES;
     }
-    DoublyLinkedListNode *postIterator = previousIterator.nextNode;
-    previousIterator.nextNode = newNode;
-    newNode.nextNode = postIterator;
-    postIterator.previousNode = newNode;
-    newNode.previousNode = previousIterator;
-    self.size++;
+    DoublyLinkedListNode *nextNeighbor = previousNeighbor.nextNode;
+    DoublyLinkedListNode *newNode = [[DoublyLinkedListNode alloc] init];
+    newNode.nodeData = newNodeData;
+    newNode.nextNode = nextNeighbor;
+    newNode.previousNode = previousNeighbor;
+    previousNeighbor.nextNode = newNode;
+    nextNeighbor.previousNode = newNode;
     return YES;
 }
 
-- (void)popHead {
-    if (self.size == 0) {
-        return;
-    }
-    DoublyLinkedListNode *poppedNode = self.head;
-    self.head = self.head.nextNode;
-    self.head.previousNode = nil;
-    poppedNode = nil;
-}
-
-- (void)keepHead {
-    if (self.size == 0) {
-        return;
-    }
-    DoublyLinkedListNode *iterator = self.head;
-    iterator = iterator.nextNode;
-    while (iterator != nil) {
-        DoublyLinkedListNode *deleteNode = iterator;
-        iterator = iterator.nextNode;
-        deleteNode = nil;
-    }
-    self.head.nextNode = nil;
-}
-
-- (void)deleteNodeAtIndex:(int)index {
-    if (index < 0 || index >= self.size) {
+- (id)removeNodeAtIndex:(NSUInteger)index {
+    DoublyLinkedListNode *targetNode = [self getNodeAtIndex:index];
+    if (targetNode == nil) {
         NSLog(@"Fail to delete node: index out of bounds");
-        return;
+        return nil;
     }
-    DoublyLinkedListNode *previousPointer = self.head;
-    while (previousPointer.nextNode != nil && index > 1) {
-        previousPointer = previousPointer.nextNode;
-        index--;
+    DoublyLinkedListNode *previousNeighbor = targetNode.previousNode;
+    DoublyLinkedListNode *nextNeighbor = targetNode.nextNode;
+    id targetNodeData = targetNode.nodeData;
+    previousNeighbor.nextNode = nextNeighbor;
+    nextNeighbor.previousNode = previousNeighbor;
+    [self.delegate listDidRemoveNode:targetNode];
+    targetNode = nil;
+    return targetNodeData;
+}
+
+- (id)removeHead {
+    if (self.size == 0) {
+        return nil;
     }
-    DoublyLinkedListNode *deletedNode = previousPointer.nextNode;
-    DoublyLinkedListNode *postPointer = previousPointer.nextNode.nextNode;
-    previousPointer.nextNode = postPointer;
-    postPointer.previousNode = previousPointer;
-    deletedNode = nil;
+    DoublyLinkedListNode *headNode = self.head;
+    id headData = headNode.nodeData;
+    self.head = headNode.nextNode;
+    self.head.previousNode = nil;
+    [self.delegate listDidRemoveNode:headNode];
+    headNode = nil;
+    return headData;
 }
 
 - (void)printList {
@@ -119,17 +120,17 @@
     while (fastPointer.nextNode.nextNode != nil && slowPointer.nextNode != nil) {
         fastPointer = fastPointer.nextNode.nextNode;
         slowPointer = slowPointer.nextNode;
-        if (fastPointer.nodeData == slowPointer.nodeData) {
+        if ([fastPointer.nodeData isEqual:slowPointer.nodeData]) {
             return YES;
         }
     }
     return NO;
 }
 
-+ (DoublyLinkedList *)makeDoublyLinkedListFromNSArray:(NSArray <NSNumber *> *)array {
++ (DoublyLinkedList *)makeDoublyLinkedListFromNSArray:(NSArray *)array {
     DoublyLinkedList *doublyLinkedList = [[DoublyLinkedList alloc] init];
-    for (NSNumber *number in array) {
-        [doublyLinkedList addNode:number];
+    for (id arrayItem in array) {
+        [doublyLinkedList addNode:arrayItem];
     }
     return doublyLinkedList;
 }

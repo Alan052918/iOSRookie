@@ -11,15 +11,25 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
+@protocol DoublyLinkedListDelegate <NSObject>
+
+//- (BOOL)nodeShouldRemove:(DoublyLinkedListNode *)node;
+
+@optional
+- (void)listDidRemoveNode:(DoublyLinkedListNode *)removedNode;
+
+@end
+
 @interface DoublyLinkedList : NSObject
 
 @property (strong, nonatomic, readwrite, nullable) DoublyLinkedListNode *head;
+@property (strong, nonatomic, readwrite, nullable) id <DoublyLinkedListDelegate> delegate;
 
 - (void)addNode:(id)newNodeData;
-- (BOOL)insertNode:(id)newNodeData atIndex:(int)index;
-- (void)popHead;
-- (void)keepHead;
-- (void)deleteNodeAtIndex:(int)index;
+- (DoublyLinkedListNode *)getNodeAtIndex:(NSUInteger)index;
+- (BOOL)insertNode:(id)newNodeData atIndex:(NSUInteger)index;
+- (id)removeNodeAtIndex:(NSUInteger)index;
+- (id)removeHead;
 - (void)printList;
 - (BOOL)detectCycle;
 

@@ -7,10 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "DoublyLinkedListNode.h"
 
-@interface ViewController : UIViewController <NodeDataSource>
-
+@interface ViewController : UINavigationController
 
 @end
-
