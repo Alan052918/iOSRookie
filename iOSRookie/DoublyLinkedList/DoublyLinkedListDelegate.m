@@ -25,7 +25,7 @@
     self.dataSourceList = [DoublyLinkedList makeDoublyLinkedListFromNSArray:array];
 }
 
-- (NSArray *)nodeDataArray {
+- (NSMutableArray *)nodeDataArray {
     NSMutableArray *array = [[NSMutableArray alloc] init];
     DoublyLinkedListNode *iterator = self.dataSourceList.head;
     while (iterator != nil) {
@@ -35,12 +35,14 @@
     return array;
 }
 
-- (void)listDidRemoveNode:(DoublyLinkedListNode *)removedNode {
-    NSLog(@"Successfully removed node: %@", removedNode.nodeData);
+- (BOOL)nodeShouldRemove:(NSInteger)index{
+    NSLog(@"Removing node %ld", index);
+    [self.dataSourceList removeNodeAtIndex:index];
+    return YES;
 }
 
-- (BOOL)nodeShouldRemove:(nonnull DoublyLinkedListNode *)node {
-    return YES;
+- (void)listDidRemoveNode:(DoublyLinkedListNode *)removedNode {
+    NSLog(@"Successfully removed node: %@", removedNode.nodeData);
 }
 
 @end

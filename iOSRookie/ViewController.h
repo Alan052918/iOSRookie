@@ -11,6 +11,7 @@
 
 @interface ViewController : UIViewController <UITableViewDelegate, UITableViewDataSource>
 
-@property (strong, nonatomic) DoublyLinkedList *dataSource;
+//@property (strong, nonatomic) DoublyLinkedList *dataSource;
+@property (strong, nonatomic) id <DoublyLinkedListDelegate> delegate;
 
 @end

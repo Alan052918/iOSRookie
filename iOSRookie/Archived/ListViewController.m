@@ -31,7 +31,7 @@
 //    doublyLinkedList.delegate = delegate;
     doublyLinkedList.delegate = delegateLVC;
     
-    DoublyLinkedListNode *doublyLinkedListedNode = [doublyLinkedList getNodeAtIndex:5];
+    DoublyLinkedListNode *doublyLinkedListedNode = [doublyLinkedList nodeAtIndex:5];
     NSLog(@"Data of node at index 5: %@", doublyLinkedListedNode.nodeData);  // Data of node at index 5: Hello
     
     [doublyLinkedList addNode:@24];

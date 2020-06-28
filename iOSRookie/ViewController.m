@@ -11,12 +11,42 @@
 
 @interface ViewController () <UITableViewDelegate, UITableViewDataSource>
 
-@property (strong,nonatomic) UITableView *tableView;
-@property (strong,nonatomic) NSArray *content;
+@property (strong, nonatomic) UINavigationBar *navigationBar;
+@property (strong, nonatomic) UITableView *tableView;
+@property (strong, nonatomic) NSMutableArray *content;
+@property (strong, nonatomic) NSIndexPath *selectedIndexPath;
 
 @end
 
 @implementation ViewController
+
+- (void)viewDidLoad {
+    [super viewDidLoad];
+    DoublyLinkedListDelegate *doublyLinkedListDelegate = [[DoublyLinkedListDelegate alloc] init];
+    self.delegate = doublyLinkedListDelegate;
+    [self.delegate prepareDataSourceList];
+    self.content = [self.delegate nodeDataArray];
+    
+    self.tableView.frame = CGRectMake(0, 88, self.view.frame.size.width, self.view.frame.size.height - 88);
+    [self.view addSubview:self.tableView];
+    
+    self.navigationBar = [[UINavigationBar alloc] initWithFrame:CGRectMake(0, 40, self.view.frame.size.width, 48)];
+    UINavigationItem* navItem = [[UINavigationItem alloc] initWithTitle:[NSString stringWithFormat:@"节点数量: %lu", self.content.count]];
+    [self.navigationBar setItems:@[navItem]];
+    [self.navigationBar setBarTintColor:[UIColor whiteColor]];
+    [self.view addSubview:self.navigationBar];
+}
+
+
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
+    return 1;
+}
+
+
+- (NSInteger)tableView:(nonnull UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+    return self.content.count;
+}
+
 
 - (nonnull UITableViewCell *)tableView:(nonnull UITableView *)tableView cellForRowAtIndexPath:(nonnull NSIndexPath *)indexPath {
     static NSString *cellIdentifier = @"cellIdentifier";
@@ -28,47 +58,63 @@
     return cell;
 }
 
-- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    return 1;
+
+- (void)onTapCancel {
+    NSLog(@"Cancel removing row: %ld", self.selectedIndexPath.row);
+    [self.tableView deselectRowAtIndexPath:self.selectedIndexPath animated:YES];
+    self.navigationBar.topItem.title = [NSString stringWithFormat:@"节点数量: %lu", self.content.count];
+    self.navigationBar.topItem.leftBarButtonItem = nil;
+    self.navigationBar.topItem.rightBarButtonItem = nil;
 }
 
-- (NSInteger)tableView:(nonnull UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return self.content.count;
+
+- (void)onTapConfirm {
+    NSLog(@"Confirm removing row: %ld", self.selectedIndexPath.row);
+    [self.delegate nodeShouldRemove:self.selectedIndexPath.row];
+    self.content = [self.delegate nodeDataArray];
+    [_tableView reloadData];
+    self.navigationBar.topItem.title = [NSString stringWithFormat:@"节点数量: %lu", self.content.count];
+    self.navigationBar.topItem.leftBarButtonItem = nil;
+    self.navigationBar.topItem.rightBarButtonItem = nil;
 }
 
-- (void)viewDidLoad {
-    [super viewDidLoad];
-    DoublyLinkedListDelegate *doublyLinkedListDelegate = [[DoublyLinkedListDelegate alloc] init];
-    [doublyLinkedListDelegate prepareDataSourceList];
-    NSArray *array = [doublyLinkedListDelegate nodeDataArray];
-    self.content = array;
 
-    UINavigationBar* navbar = [[UINavigationBar alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 64)];
-    UINavigationItem* navItem = [[UINavigationItem alloc] initWithTitle:[NSString stringWithFormat:@"Node number: %lu", (unsigned long)array.count]];
-    navbar.barTintColor = [UIColor whiteColor];
-    [navbar setItems:@[navItem]];
-    [self.view addSubview:navbar];
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    [tableView selectRowAtIndexPath:indexPath animated:YES scrollPosition:UITableViewScrollPositionMiddle];
+    self.selectedIndexPath = indexPath;
+    NSLog(@"Select row: %ld", indexPath.row);
+    self.navigationBar.topItem.title = @"是否删除节点";
     
-    self.tableView.frame = CGRectMake(0, 64, self.view.frame.size.width, self.view.frame.size.height - 64);
-    [self.view addSubview:self.tableView];
+    UIBarButtonItem *cancelButton = [[UIBarButtonItem alloc] init];
+    cancelButton.title = @"取消";
+    cancelButton.target = self;
+    cancelButton.action = @selector(onTapCancel);
+    self.navigationBar.topItem.leftBarButtonItem = cancelButton;
+    
+    UIBarButtonItem *confirmButton = [[UIBarButtonItem alloc] init];
+    confirmButton.title = @"确定";
+    confirmButton.target = self;
+    confirmButton.action = @selector(onTapConfirm);
+    self.navigationBar.topItem.rightBarButtonItem = confirmButton;
 }
+
 
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
     [self.tableView reloadData];
 }
 
+
 - (UITableView *)tableView {
     if (_tableView != nil) {
         return _tableView;
     }
-    _tableView = [[UITableView alloc]
-                              initWithFrame:[[UIScreen mainScreen] bounds]
-                              style:UITableViewStylePlain];
+    _tableView = [[UITableView alloc] initWithFrame:[[UIScreen mainScreen] bounds] style:UITableViewStylePlain];
     _tableView.autoresizingMask = UIViewAutoresizingFlexibleHeight|UIViewAutoresizingFlexibleWidth;
     _tableView.delegate = self;
     _tableView.dataSource = self;
     return _tableView;
 }
+
 
 @end

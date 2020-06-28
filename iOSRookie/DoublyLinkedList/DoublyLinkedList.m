@@ -35,7 +35,7 @@
     self.size++;
 }
 
-- (DoublyLinkedListNode *)getNodeAtIndex:(NSUInteger)index {
+- (DoublyLinkedListNode *)nodeAtIndex:(NSUInteger)index {
     if (index < 0 || index >= self.size) {
         NSLog(@"Fail to fetch node: index out of bounds");
         return nil;
@@ -53,7 +53,7 @@
         [self addNode:newNodeData];
         return YES;
     }
-    DoublyLinkedListNode *previousNeighbor = [self getNodeAtIndex:index - 1];
+    DoublyLinkedListNode *previousNeighbor = [self nodeAtIndex:index - 1];
     if (previousNeighbor == nil) {
         NSLog(@"Fail to insert node: index out of bounds");
         return NO;
@@ -72,8 +72,14 @@
     return YES;
 }
 
+/**
+ * Remove node at given index
+ *
+ * @param index index of the node to be removed
+ * @return data of the removed node
+ */
 - (id)removeNodeAtIndex:(NSUInteger)index {
-    DoublyLinkedListNode *targetNode = [self getNodeAtIndex:index];
+    DoublyLinkedListNode *targetNode = [self nodeAtIndex:index];
     if (targetNode == nil) {
         NSLog(@"Fail to delete node: index out of bounds");
         return nil;
