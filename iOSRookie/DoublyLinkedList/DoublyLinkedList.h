@@ -13,7 +13,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @protocol DoublyLinkedListDelegate <NSObject>
 
-//- (BOOL)nodeShouldRemove:(DoublyLinkedListNode *)node;
+- (BOOL)nodeShouldRemove:(DoublyLinkedListNode *)node;
 
 @optional
 - (void)listDidRemoveNode:(DoublyLinkedListNode *)removedNode;

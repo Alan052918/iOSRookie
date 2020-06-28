@@ -13,6 +13,9 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface ListViewController : UIViewController <DoublyLinkedListDelegate>
 
+- (void)prepareDataSourceList;
+- (NSArray *)nodeDataArray;
+
 @end
 
 NS_ASSUME_NONNULL_END
