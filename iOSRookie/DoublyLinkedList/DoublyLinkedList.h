@@ -14,16 +14,17 @@ NS_ASSUME_NONNULL_BEGIN
 @protocol DoublyLinkedListDelegate <NSObject>
 
 - (void)prepareDataSourceList;
-- (NSMutableArray *)nodeDataArray;
 - (BOOL)nodeShouldRemove:(NSInteger)index;
 
 @optional
+- (NSMutableArray *)nodeDataArray;
 - (void)listDidRemoveNode:(DoublyLinkedListNode *)removedNode;
 
 @end
 
 @interface DoublyLinkedList : NSObject
 
+@property NSInteger size;
 @property (strong, nonatomic, readwrite, nullable) DoublyLinkedListNode *head;
 @property (strong, nonatomic, readwrite, nullable) id <DoublyLinkedListDelegate> delegate;
 

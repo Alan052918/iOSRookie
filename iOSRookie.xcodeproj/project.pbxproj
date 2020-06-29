@@ -57,8 +57,6 @@
 		F7D9D90024A1C34500AFFC48 /* DoublyLinkedList */ = {
 			isa = PBXGroup;
 			children = (
-				F9FE986E24A34F680002F39F /* DoublyLinkedListDelegate.h */,
-				F9FE986F24A34F680002F39F /* DoublyLinkedListDelegate.m */,
 				F7D9D8FD24A1C27400AFFC48 /* DoublyLinkedList.h */,
 				F7D9D8FA24A1C27400AFFC48 /* DoublyLinkedList.m */,
 				F7D9D8FB24A1C27400AFFC48 /* DoublyLinkedListNode.h */,
@@ -70,6 +68,8 @@
 		F965188E24A83DB3004DDAB9 /* Archived */ = {
 			isa = PBXGroup;
 			children = (
+				F9FE986E24A34F680002F39F /* DoublyLinkedListDelegate.h */,
+				F9FE986F24A34F680002F39F /* DoublyLinkedListDelegate.m */,
 				F9FE986A24A333510002F39F /* ListViewController.h */,
 				F9FE986B24A333510002F39F /* ListViewController.m */,
 			);

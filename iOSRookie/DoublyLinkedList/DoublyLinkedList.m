@@ -11,8 +11,6 @@
 
 @interface DoublyLinkedList()
 
-@property int size;
-
 @end
 
 @implementation DoublyLinkedList
@@ -48,6 +46,7 @@
     return iterator;
 }
 
+
 - (BOOL)insertNode:(id)newNodeData atIndex:(NSUInteger)index {
     if (self.size == 0) {
         [self addNode:newNodeData];
@@ -69,6 +68,7 @@
     newNode.previousNode = previousNeighbor;
     previousNeighbor.nextNode = newNode;
     nextNeighbor.previousNode = newNode;
+    self.size++;
     return YES;
 }
 
@@ -91,6 +91,7 @@
     nextNeighbor.previousNode = previousNeighbor;
     [self.delegate listDidRemoveNode:targetNode];
     targetNode = nil;
+    self.size--;
     return targetNodeData;
 }
 
@@ -104,6 +105,7 @@
     self.head.previousNode = nil;
     [self.delegate listDidRemoveNode:headNode];
     headNode = nil;
+    self.size--;
     return headData;
 }
 

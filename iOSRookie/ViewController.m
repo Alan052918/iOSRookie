@@ -7,14 +7,18 @@
 //
 
 #import "ViewController.h"
-#import "DoublyLinkedListDelegate.h"
+#import "DoublyLinkedList.h"
 
-@interface ViewController () <UITableViewDelegate, UITableViewDataSource>
+@interface ViewController () <UITableViewDelegate, UITableViewDataSource, DoublyLinkedListDelegate>
 
 @property (strong, nonatomic) UINavigationBar *navigationBar;
 @property (strong, nonatomic) UITableView *tableView;
-@property (strong, nonatomic) NSMutableArray *content;
 @property (strong, nonatomic) NSIndexPath *selectedIndexPath;
+@property (strong, nonatomic) DoublyLinkedList *dataSourceList;
+
+- (void)onTapCancel;
+- (void)onTapConfirm;
+- (void)initializeDataSourceList;
 
 @end
 
@@ -22,16 +26,13 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    DoublyLinkedListDelegate *doublyLinkedListDelegate = [[DoublyLinkedListDelegate alloc] init];
-    self.delegate = doublyLinkedListDelegate;
-    [self.delegate prepareDataSourceList];
-    self.content = [self.delegate nodeDataArray];
+    [self initializeDataSourceList];
     
     self.tableView.frame = CGRectMake(0, 88, self.view.frame.size.width, self.view.frame.size.height - 88);
     [self.view addSubview:self.tableView];
     
     self.navigationBar = [[UINavigationBar alloc] initWithFrame:CGRectMake(0, 40, self.view.frame.size.width, 48)];
-    UINavigationItem* navItem = [[UINavigationItem alloc] initWithTitle:[NSString stringWithFormat:@"节点数量: %lu", self.content.count]];
+    UINavigationItem* navItem = [[UINavigationItem alloc] initWithTitle:[NSString stringWithFormat:@"节点数量: %lu", self.dataSourceList.size]];
     [self.navigationBar setItems:@[navItem]];
     [self.navigationBar setBarTintColor:[UIColor whiteColor]];
     [self.view addSubview:self.navigationBar];
@@ -44,7 +45,7 @@
 
 
 - (NSInteger)tableView:(nonnull UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return self.content.count;
+    return self.dataSourceList.size;
 }
 
 
@@ -54,7 +55,7 @@
     if(cell == nil) {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier];
     }
-    cell.textLabel.text =  [self.content objectAtIndex:indexPath.row];
+    cell.textLabel.text = (NSString *)[self.dataSourceList nodeAtIndex:indexPath.row].nodeData;
     return cell;
 }
 
@@ -62,7 +63,8 @@
 - (void)onTapCancel {
     NSLog(@"Cancel removing row: %ld", self.selectedIndexPath.row);
     [self.tableView deselectRowAtIndexPath:self.selectedIndexPath animated:YES];
-    self.navigationBar.topItem.title = [NSString stringWithFormat:@"节点数量: %lu", self.content.count];
+    self.selectedIndexPath = nil;
+    self.navigationBar.topItem.title = [NSString stringWithFormat:@"节点数量: %lu", self.dataSourceList.size];
     self.navigationBar.topItem.leftBarButtonItem = nil;
     self.navigationBar.topItem.rightBarButtonItem = nil;
 }
@@ -70,10 +72,10 @@
 
 - (void)onTapConfirm {
     NSLog(@"Confirm removing row: %ld", self.selectedIndexPath.row);
-    [self.delegate nodeShouldRemove:self.selectedIndexPath.row];
-    self.content = [self.delegate nodeDataArray];
-    [_tableView reloadData];
-    self.navigationBar.topItem.title = [NSString stringWithFormat:@"节点数量: %lu", self.content.count];
+    [self.dataSourceList removeNodeAtIndex:self.selectedIndexPath.row];
+    self.selectedIndexPath = nil;
+    [self.tableView reloadData];
+    self.navigationBar.topItem.title = [NSString stringWithFormat:@"节点数量: %lu", self.dataSourceList.size];
     self.navigationBar.topItem.leftBarButtonItem = nil;
     self.navigationBar.topItem.rightBarButtonItem = nil;
 }
@@ -101,7 +103,7 @@
 
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
-    [self.tableView reloadData];
+    [_tableView reloadData];
 }
 
 
@@ -114,6 +116,14 @@
     _tableView.delegate = self;
     _tableView.dataSource = self;
     return _tableView;
+}
+
+
+- (void)initializeDataSourceList {
+    self.dataSourceList = [[DoublyLinkedList alloc] init];
+    for (int i = 1; i <= 100; i++) {
+        [self.dataSourceList addNode:[NSString stringWithFormat:@"%d", i]];
+    }
 }
 
 
