@@ -7,6 +7,9 @@
 //
 
 #import "AppDelegate.h"
+#import "CellDetailViewController.h"
+#import "NavigationViewController.h"
+#import "ViewController.h"
 
 @interface AppDelegate ()
 
@@ -17,6 +20,13 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
+    self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
+    CellDetailViewController *cellDetailViewController = [[CellDetailViewController alloc] init];
+    ViewController *viewController = [[ViewController alloc] init];
+    self.navigationController = [[NavigationViewController alloc] init];
+    self.navigationController.viewControllers = @[viewController, cellDetailViewController];
+    self.window.rootViewController = self.navigationController;
+    [self.window makeKeyAndVisible];
     return YES;
 }
 
