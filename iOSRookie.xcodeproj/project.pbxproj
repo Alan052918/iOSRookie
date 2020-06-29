@@ -101,8 +101,11 @@
 		F9FD3CFD24A1AFBA000846A2 /* iOSRookie */ = {
 			isa = PBXGroup;
 			children = (
-				F9FE986D24A333C00002F39F /* Supporting Files */,
 				F965188E24A83DB3004DDAB9 /* Archived */,
+				F9FD3CFE24A1AFBA000846A2 /* AppDelegate.h */,
+				F9FD3CFF24A1AFBA000846A2 /* AppDelegate.m */,
+				F9FD3D0124A1AFBA000846A2 /* SceneDelegate.h */,
+				F9FD3D0224A1AFBA000846A2 /* SceneDelegate.m */,
 				F776E20224A9EBD000D3E9FF /* CellDetailViewController.h */,
 				F776E20324A9EBD000D3E9FF /* CellDetailViewController.m */,
 				F776E1FF24A9EA3F00D3E9FF /* NavigationViewController.h */,
@@ -117,17 +120,6 @@
 				F9FD3D1024A1AFBC000846A2 /* main.m */,
 			);
 			path = iOSRookie;
-			sourceTree = "<group>";
-		};
-		F9FE986D24A333C00002F39F /* Supporting Files */ = {
-			isa = PBXGroup;
-			children = (
-				F9FD3CFE24A1AFBA000846A2 /* AppDelegate.h */,
-				F9FD3CFF24A1AFBA000846A2 /* AppDelegate.m */,
-				F9FD3D0124A1AFBA000846A2 /* SceneDelegate.h */,
-				F9FD3D0224A1AFBA000846A2 /* SceneDelegate.m */,
-			);
-			path = "Supporting Files";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
