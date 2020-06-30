@@ -28,7 +28,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (strong, nonatomic, readwrite, nullable) DoublyLinkedListNode *head;
 @property (strong, nonatomic, readwrite, nullable) id <DoublyLinkedListDelegate> delegate;
 
-- (void)addNode:(id)newNodeData;
+- (BOOL)addNode:(id)newNodeData;
 - (DoublyLinkedListNode *)nodeAtIndex:(NSUInteger)index;
 - (BOOL)insertNode:(id)newNodeData atIndex:(NSUInteger)index;
 - (id)removeNodeAtIndex:(NSUInteger)index;

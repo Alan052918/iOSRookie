@@ -10,7 +10,15 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
+@protocol CellCreationDelegate <NSObject>
+
+- (BOOL)insertCellWithData:(id)cellData atIndex:(NSUInteger)cellIndex;
+
+@end
+
 @interface CellDetailViewController : UIViewController
+
+@property (strong, nonatomic) id <CellCreationDelegate> delegate;
 
 @end
 

@@ -8,16 +8,21 @@
 
 #import "ViewController.h"
 #import "DoublyLinkedList.h"
+#import "CellDetailViewController.h"
 
-@interface ViewController () <UITableViewDelegate, UITableViewDataSource, DoublyLinkedListDelegate>
+@interface ViewController () <UITableViewDelegate, UITableViewDataSource, DoublyLinkedListDelegate, CellCreationDelegate>
 
-@property (strong, nonatomic) UINavigationBar *navigationBar;
 @property (strong, nonatomic) UITableView *tableView;
 @property (strong, nonatomic) NSIndexPath *selectedIndexPath;
 @property (strong, nonatomic) DoublyLinkedList *dataSourceList;
+@property (strong, nonatomic) UINavigationItem *navigationItem;
+@property (strong, nonatomic) UIBarButtonItem *addButton;
+@property (strong, nonatomic) UIBarButtonItem *cancelButton;
+@property (strong, nonatomic) UIBarButtonItem *confirmButton;
 
-- (void)onTapCancel;
-- (void)onTapConfirm;
+- (void)addCell;
+- (void)cancelRemoveCell;
+- (void)confirmRemoveCell;
 - (void)initializeDataSourceList;
 
 @end
@@ -27,15 +32,15 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self initializeDataSourceList];
-    
     self.tableView.frame = CGRectMake(0, 88, self.view.frame.size.width, self.view.frame.size.height - 88);
     [self.view addSubview:self.tableView];
     
-    self.navigationBar = [[UINavigationBar alloc] initWithFrame:CGRectMake(0, 40, self.view.frame.size.width, 48)];
-    UINavigationItem* navItem = [[UINavigationItem alloc] initWithTitle:[NSString stringWithFormat:@"节点数量: %lu", self.dataSourceList.size]];
-    [self.navigationBar setItems:@[navItem]];
-    [self.navigationBar setBarTintColor:[UIColor whiteColor]];
-    [self.view addSubview:self.navigationBar];
+    self.addButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(addCell)];
+    self.cancelButton = [[UIBarButtonItem alloc] initWithTitle:@"取消" style:UIBarButtonItemStylePlain target:self action:@selector(cancelRemoveCell)];
+    self.confirmButton = [[UIBarButtonItem alloc] initWithTitle:@"确定" style:UIBarButtonItemStyleDone target:self action:@selector(confirmRemoveCell)];
+    
+    self.navigationItem = [[UINavigationItem alloc] initWithTitle:[NSString stringWithFormat:@"节点数量: %lu", self.dataSourceList.size]];
+    self.navigationItem.rightBarButtonItem = self.addButton;
 }
 
 
@@ -60,24 +65,30 @@
 }
 
 
-- (void)onTapCancel {
-    NSLog(@"Cancel removing row: %ld", self.selectedIndexPath.row);
-    [self.tableView deselectRowAtIndexPath:self.selectedIndexPath animated:YES];
-    self.selectedIndexPath = nil;
-    self.navigationBar.topItem.title = [NSString stringWithFormat:@"节点数量: %lu", self.dataSourceList.size];
-    self.navigationBar.topItem.leftBarButtonItem = nil;
-    self.navigationBar.topItem.rightBarButtonItem = nil;
+- (void)addCell {
+    CellDetailViewController *detailViewController = [[CellDetailViewController alloc] init];
+    [self.navigationController pushViewController:detailViewController animated:YES];
 }
 
 
-- (void)onTapConfirm {
+- (void)cancelRemoveCell {
+    NSLog(@"Cancel removing row: %ld", self.selectedIndexPath.row);
+    [self.tableView deselectRowAtIndexPath:self.selectedIndexPath animated:YES];
+    self.selectedIndexPath = nil;
+    self.navigationItem.title = [NSString stringWithFormat:@"节点数量: %lu", self.dataSourceList.size];
+    self.navigationItem.leftBarButtonItem = nil;
+    self.navigationItem.rightBarButtonItem = self.addButton;
+}
+
+
+- (void)confirmRemoveCell {
     NSLog(@"Confirm removing row: %ld", self.selectedIndexPath.row);
     [self.dataSourceList removeNodeAtIndex:self.selectedIndexPath.row];
     self.selectedIndexPath = nil;
     [self.tableView reloadData];
-    self.navigationBar.topItem.title = [NSString stringWithFormat:@"节点数量: %lu", self.dataSourceList.size];
-    self.navigationBar.topItem.leftBarButtonItem = nil;
-    self.navigationBar.topItem.rightBarButtonItem = nil;
+    self.navigationItem.title = [NSString stringWithFormat:@"节点数量: %lu", self.dataSourceList.size];
+    self.navigationItem.leftBarButtonItem = nil;
+    self.navigationItem.rightBarButtonItem = self.addButton;
 }
 
 
@@ -85,19 +96,9 @@
     [tableView selectRowAtIndexPath:indexPath animated:YES scrollPosition:UITableViewScrollPositionMiddle];
     self.selectedIndexPath = indexPath;
     NSLog(@"Select row: %ld", indexPath.row);
-    self.navigationBar.topItem.title = @"是否删除节点";
-    
-    UIBarButtonItem *cancelButton = [[UIBarButtonItem alloc] init];
-    cancelButton.title = @"取消";
-    cancelButton.target = self;
-    cancelButton.action = @selector(onTapCancel);
-    self.navigationBar.topItem.leftBarButtonItem = cancelButton;
-    
-    UIBarButtonItem *confirmButton = [[UIBarButtonItem alloc] init];
-    confirmButton.title = @"确定";
-    confirmButton.target = self;
-    confirmButton.action = @selector(onTapConfirm);
-    self.navigationBar.topItem.rightBarButtonItem = confirmButton;
+    self.navigationItem.title = @"是否删除节点";
+    self.navigationItem.leftBarButtonItem = self.cancelButton;
+    self.navigationItem.rightBarButtonItem = self.confirmButton;
 }
 
 
@@ -124,6 +125,16 @@
     for (int i = 1; i <= 100; i++) {
         [self.dataSourceList addNode:[NSString stringWithFormat:@"%d", i]];
     }
+}
+
+
+- (BOOL)insertCellWithData:(id)cellData atIndex:(NSUInteger)cellIndex {
+    BOOL flag = [self.dataSourceList insertNode:cellData atIndex:cellIndex];
+    if (flag == NO) {
+        return NO;
+    }
+    [self.tableView reloadData];
+    return YES;
 }
 
 

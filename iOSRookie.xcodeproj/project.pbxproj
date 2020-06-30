@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		F776E20124A9EA3F00D3E9FF /* NavigationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F776E20024A9EA3F00D3E9FF /* NavigationViewController.m */; };
 		F776E20424A9EBD000D3E9FF /* CellDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F776E20324A9EBD000D3E9FF /* CellDetailViewController.m */; };
 		F7D9D8FE24A1C27400AFFC48 /* DoublyLinkedList.m in Sources */ = {isa = PBXBuildFile; fileRef = F7D9D8FA24A1C27400AFFC48 /* DoublyLinkedList.m */; };
 		F7D9D8FF24A1C27400AFFC48 /* DoublyLinkedListNode.m in Sources */ = {isa = PBXBuildFile; fileRef = F7D9D8FC24A1C27400AFFC48 /* DoublyLinkedListNode.m */; };
@@ -23,8 +22,6 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		F776E1FF24A9EA3F00D3E9FF /* NavigationViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NavigationViewController.h; sourceTree = "<group>"; };
-		F776E20024A9EA3F00D3E9FF /* NavigationViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = NavigationViewController.m; sourceTree = "<group>"; };
 		F776E20224A9EBD000D3E9FF /* CellDetailViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = CellDetailViewController.h; path = iOSRookie/CellDetailViewController.h; sourceTree = SOURCE_ROOT; };
 		F776E20324A9EBD000D3E9FF /* CellDetailViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = CellDetailViewController.m; path = iOSRookie/CellDetailViewController.m; sourceTree = SOURCE_ROOT; };
 		F7D9D8FA24A1C27400AFFC48 /* DoublyLinkedList.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DoublyLinkedList.m; sourceTree = "<group>"; };
@@ -108,8 +105,6 @@
 				F9FD3D0224A1AFBA000846A2 /* SceneDelegate.m */,
 				F776E20224A9EBD000D3E9FF /* CellDetailViewController.h */,
 				F776E20324A9EBD000D3E9FF /* CellDetailViewController.m */,
-				F776E1FF24A9EA3F00D3E9FF /* NavigationViewController.h */,
-				F776E20024A9EA3F00D3E9FF /* NavigationViewController.m */,
 				F9FD3D0424A1AFBA000846A2 /* ViewController.h */,
 				F9FD3D0524A1AFBA000846A2 /* ViewController.m */,
 				F7D9D90024A1C34500AFFC48 /* DoublyLinkedList */,
@@ -201,7 +196,6 @@
 				F7D9D8FE24A1C27400AFFC48 /* DoublyLinkedList.m in Sources */,
 				F9FD3D1124A1AFBC000846A2 /* main.m in Sources */,
 				F9FD3D0324A1AFBA000846A2 /* SceneDelegate.m in Sources */,
-				F776E20124A9EA3F00D3E9FF /* NavigationViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

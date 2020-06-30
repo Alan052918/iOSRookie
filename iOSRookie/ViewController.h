@@ -7,9 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "CellDetailViewController.h"
 #import "DoublyLinkedList.h"
 
-@interface ViewController : UIViewController <UITableViewDelegate, UITableViewDataSource>
+@interface ViewController : UIViewController <UITableViewDelegate, UITableViewDataSource, DoublyLinkedListDelegate, CellCreationDelegate>
 
 
 @end
