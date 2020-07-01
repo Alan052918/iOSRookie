@@ -60,7 +60,7 @@
  * @return YES if the node is successfully inserted, NO otherwise
  */
 - (BOOL)insertNode:(id)newNodeData atIndex:(NSUInteger)index {
-    if (newNodeData == nil) {
+    if ([newNodeData isEqualToString:@""]) {
         NSLog(@"Fail to insert node: data is empty");
         return NO;
     }
@@ -96,6 +96,11 @@
  * @return data of the removed node
  */
 - (id)removeNodeAtIndex:(NSUInteger)index {
+//    BOOL shouldRemove = [self.delegate nodeShouldRemove:index];
+//    if (!shouldRemove) {
+//        NSLog(@"Abort removal");
+//        return nil;
+//    }
     DoublyLinkedListNode *targetNode = [self nodeAtIndex:index];
     if (targetNode == nil) {
         NSLog(@"Fail to delete node: index out of bounds");
@@ -112,7 +117,7 @@
     if (nextNeighbor != nil) {
         nextNeighbor.previousNode = previousNeighbor;
     }
-    [self.delegate listDidRemoveNode:targetNode];
+//    [self.delegate listDidRemoveNode:targetNode];
     targetNode = nil;
     self.size--;
     return targetNodeData;
@@ -126,7 +131,7 @@
     id headData = headNode.nodeData;
     self.head = headNode.nextNode;
     self.head.previousNode = nil;
-    [self.delegate listDidRemoveNode:headNode];
+//    [self.delegate listDidRemoveNode:headNode];
     headNode = nil;
     self.size--;
     return headData;

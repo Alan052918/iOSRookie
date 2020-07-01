@@ -12,7 +12,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @protocol CellCreationDelegate <NSObject>
 
-- (BOOL)insertCellWithData:(id)cellData atIndex:(NSUInteger)cellIndex;
+- (BOOL)tableInsertCellWithData:(id)cellData atIndex:(NSUInteger)cellIndex error:(NSError **)error;
 
 @end
 

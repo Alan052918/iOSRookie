@@ -19,6 +19,7 @@
 @property (strong, nonatomic) UIBarButtonItem *addButton;
 @property (strong, nonatomic) UIBarButtonItem *cancelButton;
 @property (strong, nonatomic) UIBarButtonItem *confirmButton;
+@property BOOL shouldRemove;
 
 - (void)addCell;
 - (void)cancelRemoveCell;
@@ -67,6 +68,7 @@
 
 - (void)addCell {
     CellDetailViewController *detailViewController = [[CellDetailViewController alloc] init];
+    detailViewController.delegate = self;
     [self.navigationController pushViewController:detailViewController animated:YES];
 }
 
@@ -125,12 +127,12 @@
     for (int i = 1; i <= 100; i++) {
         [self.dataSourceList addNode:[NSString stringWithFormat:@"%d", i]];
     }
+    self.dataSourceList.delegate = self;
 }
 
 
-- (BOOL)insertCellWithData:(id)cellData atIndex:(NSUInteger)cellIndex {
-    BOOL flag = [self.dataSourceList insertNode:cellData atIndex:cellIndex];
-    if (flag == NO) {
+- (BOOL)tableInsertCellWithData:(id)cellData atIndex:(NSUInteger)cellIndex error:(NSError **)error {
+    if ([self.dataSourceList insertNode:cellData atIndex:cellIndex] == NO) {
         return NO;
     }
     [self.tableView reloadData];
