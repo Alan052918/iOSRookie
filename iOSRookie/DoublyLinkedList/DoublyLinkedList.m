@@ -11,13 +11,15 @@
 
 @interface DoublyLinkedList()
 
-@property int size;
-
 @end
 
 @implementation DoublyLinkedList
 
-- (void)addNode:(id)newNodeData {
+- (BOOL)addNode:(id)newNodeData {
+    if (newNodeData == nil) {
+        NSLog(@"Fail to add node: data is emtpy");
+        return NO;
+    }
     DoublyLinkedListNode *newNode = [[DoublyLinkedListNode alloc] init];
     newNode.nodeData = newNodeData;
     newNode.nextNode = nil;
@@ -33,9 +35,10 @@
         newNode.previousNode = iterator;
     }
     self.size++;
+    return YES;
 }
 
-- (DoublyLinkedListNode *)getNodeAtIndex:(NSUInteger)index {
+- (DoublyLinkedListNode *)nodeAtIndex:(NSUInteger)index {
     if (index < 0 || index >= self.size) {
         NSLog(@"Fail to fetch node: index out of bounds");
         return nil;
@@ -48,32 +51,57 @@
     return iterator;
 }
 
+
+/**
+ * Insert node at given index, including head and tail
+ *
+ * @param newNodeData data of the node to insert
+ * @param index index to insert the node
+ * @return YES if the node is successfully inserted, NO otherwise
+ */
 - (BOOL)insertNode:(id)newNodeData atIndex:(NSUInteger)index {
+    if ([newNodeData isEqualToString:@""]) {
+        NSLog(@"Fail to insert node: data is empty");
+        return NO;
+    }
     if (self.size == 0) {
+        NSLog(@"first node");
         [self addNode:newNodeData];
         return YES;
     }
-    DoublyLinkedListNode *previousNeighbor = [self getNodeAtIndex:index - 1];
-    if (previousNeighbor == nil) {
+    DoublyLinkedListNode *nextNeighbor = [self nodeAtIndex:index];
+    if (nextNeighbor == nil) {
         NSLog(@"Fail to insert node: index out of bounds");
         return NO;
     }
-    if (previousNeighbor.nextNode == nil) {
-        [self addNode:newNodeData];
-        return YES;
-    }
-    DoublyLinkedListNode *nextNeighbor = previousNeighbor.nextNode;
+    DoublyLinkedListNode *previousNeighbor = [self nodeAtIndex:index - 1];
     DoublyLinkedListNode *newNode = [[DoublyLinkedListNode alloc] init];
     newNode.nodeData = newNodeData;
     newNode.nextNode = nextNeighbor;
     newNode.previousNode = previousNeighbor;
-    previousNeighbor.nextNode = newNode;
+    if (previousNeighbor != nil) {
+        previousNeighbor.nextNode = newNode;
+    } else {
+        self.head = newNode;
+    }
     nextNeighbor.previousNode = newNode;
+    self.size++;
     return YES;
 }
 
+/**
+ * Remove node at given index
+ *
+ * @param index index of the node to be removed
+ * @return data of the removed node
+ */
 - (id)removeNodeAtIndex:(NSUInteger)index {
-    DoublyLinkedListNode *targetNode = [self getNodeAtIndex:index];
+//    BOOL shouldRemove = [self.delegate nodeShouldRemove:index];
+//    if (!shouldRemove) {
+//        NSLog(@"Abort removal");
+//        return nil;
+//    }
+    DoublyLinkedListNode *targetNode = [self nodeAtIndex:index];
     if (targetNode == nil) {
         NSLog(@"Fail to delete node: index out of bounds");
         return nil;
@@ -81,10 +109,17 @@
     DoublyLinkedListNode *previousNeighbor = targetNode.previousNode;
     DoublyLinkedListNode *nextNeighbor = targetNode.nextNode;
     id targetNodeData = targetNode.nodeData;
-    previousNeighbor.nextNode = nextNeighbor;
-    nextNeighbor.previousNode = previousNeighbor;
-    [self.delegate listDidRemoveNode:targetNode];
+    if (previousNeighbor != nil) {
+        previousNeighbor.nextNode = nextNeighbor;
+    } else {
+        self.head = nextNeighbor;
+    }
+    if (nextNeighbor != nil) {
+        nextNeighbor.previousNode = previousNeighbor;
+    }
+//    [self.delegate listDidRemoveNode:targetNode];
     targetNode = nil;
+    self.size--;
     return targetNodeData;
 }
 
@@ -96,8 +131,9 @@
     id headData = headNode.nodeData;
     self.head = headNode.nextNode;
     self.head.previousNode = nil;
-    [self.delegate listDidRemoveNode:headNode];
+//    [self.delegate listDidRemoveNode:headNode];
     headNode = nil;
+    self.size--;
     return headData;
 }
 
