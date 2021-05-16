@@ -10,6 +10,7 @@
 		F776E20424A9EBD000D3E9FF /* CellDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F776E20324A9EBD000D3E9FF /* CellDetailViewController.m */; };
 		F7D9D8FE24A1C27400AFFC48 /* DoublyLinkedList.m in Sources */ = {isa = PBXBuildFile; fileRef = F7D9D8FA24A1C27400AFFC48 /* DoublyLinkedList.m */; };
 		F7D9D8FF24A1C27400AFFC48 /* DoublyLinkedListNode.m in Sources */ = {isa = PBXBuildFile; fileRef = F7D9D8FC24A1C27400AFFC48 /* DoublyLinkedListNode.m */; };
+		F9D2D45824B98EB3002032DC /* ViewController+CategoryDemo.m in Sources */ = {isa = PBXBuildFile; fileRef = F9D2D45724B98EB3002032DC /* ViewController+CategoryDemo.m */; };
 		F9FD3D0024A1AFBA000846A2 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = F9FD3CFF24A1AFBA000846A2 /* AppDelegate.m */; };
 		F9FD3D0324A1AFBA000846A2 /* SceneDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = F9FD3D0224A1AFBA000846A2 /* SceneDelegate.m */; };
 		F9FD3D0624A1AFBA000846A2 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F9FD3D0524A1AFBA000846A2 /* ViewController.m */; };
@@ -28,6 +29,8 @@
 		F7D9D8FB24A1C27400AFFC48 /* DoublyLinkedListNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DoublyLinkedListNode.h; sourceTree = "<group>"; };
 		F7D9D8FC24A1C27400AFFC48 /* DoublyLinkedListNode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DoublyLinkedListNode.m; sourceTree = "<group>"; };
 		F7D9D8FD24A1C27400AFFC48 /* DoublyLinkedList.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DoublyLinkedList.h; sourceTree = "<group>"; };
+		F9D2D45624B98EB3002032DC /* ViewController+CategoryDemo.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "ViewController+CategoryDemo.h"; sourceTree = "<group>"; };
+		F9D2D45724B98EB3002032DC /* ViewController+CategoryDemo.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "ViewController+CategoryDemo.m"; sourceTree = "<group>"; };
 		F9FD3CFB24A1AFBA000846A2 /* iOSRookie.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = iOSRookie.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F9FD3CFE24A1AFBA000846A2 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		F9FD3CFF24A1AFBA000846A2 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -107,6 +110,8 @@
 				F776E20324A9EBD000D3E9FF /* CellDetailViewController.m */,
 				F9FD3D0424A1AFBA000846A2 /* ViewController.h */,
 				F9FD3D0524A1AFBA000846A2 /* ViewController.m */,
+				F9D2D45624B98EB3002032DC /* ViewController+CategoryDemo.h */,
+				F9D2D45724B98EB3002032DC /* ViewController+CategoryDemo.m */,
 				F7D9D90024A1C34500AFFC48 /* DoublyLinkedList */,
 				F9FD3D0724A1AFBA000846A2 /* Main.storyboard */,
 				F9FD3D0A24A1AFBC000846A2 /* Assets.xcassets */,
@@ -194,6 +199,7 @@
 				F9FD3D0024A1AFBA000846A2 /* AppDelegate.m in Sources */,
 				F776E20424A9EBD000D3E9FF /* CellDetailViewController.m in Sources */,
 				F7D9D8FE24A1C27400AFFC48 /* DoublyLinkedList.m in Sources */,
+				F9D2D45824B98EB3002032DC /* ViewController+CategoryDemo.m in Sources */,
 				F9FD3D1124A1AFBC000846A2 /* main.m in Sources */,
 				F9FD3D0324A1AFBA000846A2 /* SceneDelegate.m in Sources */,
 			);
